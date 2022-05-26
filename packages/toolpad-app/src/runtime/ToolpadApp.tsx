@@ -33,7 +33,9 @@ import {
   fireEvent,
   JsRuntimeProvider,
   NodeRuntimeWrapper,
+  Placeholder,
   ResetNodeErrorsKeyProvider,
+  Slots,
 } from '@mui/toolpad-core/runtime';
 import * as builtins from '@mui/toolpad-components';
 import * as appDom from '../appDom';
@@ -187,6 +189,19 @@ function RenderedNodeContent({ nodeId, childNodes, Component }: RenderedNodeCont
       children: reactChildren,
     };
   }, [boundProps, onChangeHandlers, reactChildren]);
+
+  // Wrap with slots
+  for (const [propName, argType] of Object.entries(argTypes)) {
+    if (argType?.typeDef.type === 'element') {
+      if (argType.control?.type === 'slots') {
+        const value = props[propName];
+        props[propName] = <Slots prop={propName}>{value}</Slots>;
+      } else if (argType.control?.type === 'slot') {
+        const value = props[propName];
+        props[propName] = <Placeholder prop={propName}>{value}</Placeholder>;
+      }
+    }
+  }
 
   return <Component {...props} />;
 }
