@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import {
   ArgTypeDefinition,
   ArgTypeDefinitions,
-  SlotType,
   RuntimeError,
   ComponentConfig,
 } from '@mui/toolpad-core';
@@ -29,29 +28,10 @@ export type FlowDirection = 'row' | 'column' | 'row-reverse' | 'column-reverse';
 
 export type Updates<O extends { id: string }> = Partial<O> & Pick<O, 'id'>;
 
-export interface SlotLocation {
-  parentId: NodeId;
-  parentProp: string;
-  parentIndex?: string;
-}
-
-export type SlotDirection = 'horizontal' | 'vertical';
-
-export interface SlotState {
-  type: SlotType;
-  rect: Rectangle;
-  direction: FlowDirection;
-}
-
-export interface SlotsState {
-  [prop: string]: SlotState | undefined;
-}
-
 export interface NodeInfo {
   nodeId: NodeId;
   error?: RuntimeError | null;
   rect?: Rectangle;
-  slots?: SlotsState;
   componentConfig?: ComponentConfig<unknown>;
   props: { [key: string]: unknown };
 }

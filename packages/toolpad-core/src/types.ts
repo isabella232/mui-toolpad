@@ -43,8 +43,6 @@ export type BindableAttrValues<P> = {
   readonly [K in keyof P]?: BindableAttrValue<P[K]>;
 };
 
-export type SlotType = 'single' | 'multiple';
-
 export interface ValueTypeBase {
   type: 'string' | 'boolean' | 'number' | 'object' | 'array' | 'element' | 'function';
 }
